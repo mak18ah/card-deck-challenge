@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+# drun
+#  Description: 
+#  Relay arbritary commands into docker container
+#
+
+unamestr="$(uname)"
+module=${PWD}
+drunprops=""
+docker_volume_mounts=()
+docker_working_dir=()
+OLD_IFS=$IFS
+  
+if [[ "$unamestr" == "Linux" ]]; then
+  drunprops="drun.linux.properties"
+else
+  drunprops="drun.osx.properties" 
+fi
+
+while [[ -d "${module}" ]]
+do
+  project_props="${module}/${drunprops}"
+  if [[ -f "$project_props" ]]; then
+    . "${module}/${drunprops}"
+    break
+  fi
+  module=${module%/*}  
+done
+
+if [ -z "$image" ]; then
+  image="ubuntu:16.04"
+fi
+  
+if [ -n "volumes" ]; then
+  IFS=,
+  for i in $volumes
+  do
+    docker_volume_mounts+=("-v" "$i")  
+  done    
+fi
+
+if [ -n "workingdir" ]; then
+  docker_working_dir=("-w" "$workingdir")
+fi
+
+IFS=$OLD_IFS
+docker run -t --rm \
+  "${docker_volume_mounts[@]}" \
+  "${docker_working_dir[@]}" \
+  "$image" /bin/bash -c "$*"
+exit $?
