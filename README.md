@@ -14,9 +14,10 @@ Note: If running on an unsupported platform you will need to fallback to native 
   
 #### Download/Install
 * [Docker Engine](https://docs.docker.com/engine/install)
+** docker daemon must be running!!
 * Included a helper installation script to install `drun`, run:
 ```
-sudo ./scripts/global/helper/install_drun.sh 
+./scripts/global/helper/install_drun.sh 
 ```
 
 ## Usage 

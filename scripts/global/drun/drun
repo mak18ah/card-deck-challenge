@@ -14,8 +14,10 @@ OLD_IFS=$IFS
   
 if [[ "$unamestr" == "Linux" ]]; then
   drunprops="drun.linux.properties"
-else
+elif [[ "$unamestr" == "Darwin" ]]; then
   drunprops="drun.osx.properties" 
+else
+  echo "Unsupported platform!!"; exit 1; 
 fi
 
 while [[ -d "${module}" ]]
