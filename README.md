@@ -19,6 +19,7 @@ Note: If running on an unsupported platform you will need to fallback to native 
 ```
 ./scripts/global/helper/install_drun.sh 
 ```
+** OSX only: restart/start new terminal session after installing `drun`
 
 ## Usage 
 
